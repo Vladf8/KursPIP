@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:postgresql://localhost:5432/pip</property>
+    <property name="connection.driver_class">org.postgresql.Driver</property>
+      <mapping class="ru.ifmo.БитваEntity"/>
+      <mapping resource="ru/ifmo/mapping.xml"/>
+      <mapping class="ru.ifmo.ВойнаEntity"/>
+      <mapping class="ru.ifmo.ДодзёEntity"/>
+      <mapping class="ru.ifmo.ДуэльEntity"/>
+      <mapping class="ru.ifmo.ЗемельныйНаделEntity"/>
+      <mapping class="ru.ifmo.ИнвентарьEntity"/>
+      <mapping class="ru.ifmo.КланEntity"/>
+      <mapping class="ru.ifmo.КланСторонаEntity"/>
+      <mapping class="ru.ifmo.СамурайEntity"/>
+      <mapping class="ru.ifmo.СамурайБитваEntity"/>
+      <mapping class="ru.ifmo.СамурайТренировкаEntity"/>
+      <mapping class="ru.ifmo.СторонаEntity"/>
+      <mapping class="ru.ifmo.СторонаБитваEntity"/>
+      <mapping class="ru.ifmo.ТренировкаEntity"/>
+      <!-- <property name="connection.username"/> -->
+    <!-- <property name="connection.password"/> -->
+
+    <!-- DB schema will be updated if needed -->
+    <!-- <property name="hbm2ddl.auto">update</property> -->
+  </session-factory>
+</hibernate-configuration>
