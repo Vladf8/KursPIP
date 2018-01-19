@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:postgresql://localhost:5432/pip</property>
+    <property name="connection.driver_class">org.postgresql.Driver</property>
+      <mapping class="ru.ifmo.samuraiWorld.data.Battle"/>
+      <mapping resource="ru/ifmo/samuraiWorld/data/mapping.xml"/>
+      <mapping class="ru.ifmo.samuraiWorld.data.Clan"/>
+      <mapping class="ru.ifmo.samuraiWorld.data.ClanSide"/>
+      <mapping class="ru.ifmo.samuraiWorld.data.Dodze"/>
+      <mapping class="ru.ifmo.samuraiWorld.data.Duel"/>
+      <mapping class="ru.ifmo.samuraiWorld.data.Inventory"/>
+      <mapping class="ru.ifmo.samuraiWorld.data.Land"/>
+      <mapping class="ru.ifmo.samuraiWorld.data.Samurai"/>
+      <mapping class="ru.ifmo.samuraiWorld.data.SamuraiBattle"/>
+      <mapping class="ru.ifmo.samuraiWorld.data.SamuraiTraining"/>
+      <mapping class="ru.ifmo.samuraiWorld.data.Side"/>
+      <mapping class="ru.ifmo.samuraiWorld.data.SideBattle"/>
+      <mapping class="ru.ifmo.samuraiWorld.data.Training"/>
+      <mapping class="ru.ifmo.samuraiWorld.data.War"/>
+      <!-- <property name="connection.username"/> -->
+    <!-- <property name="connection.password"/> -->
+
+    <!-- DB schema will be updated if needed -->
+    <!-- <property name="hbm2ddl.auto">update</property> -->
+  </session-factory>
+</hibernate-configuration>

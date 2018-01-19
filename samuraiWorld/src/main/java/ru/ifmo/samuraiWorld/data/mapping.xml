@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="ru.ifmo.samuraiWorld.data.Battle">
+        <table name="Battle" schema="public" catalog="pip"/>
+        <attributes>
+            <id name="id">
+                <column name="id" precision="-1"/>
+            </id>
+            <basic name="idWar">
+                <column name="id_war" precision="-1"/>
+            </basic>
+            <basic name="victorySide">
+                <column name="victory_side" nullable="false" precision="-1"/>
+            </basic>
+            <basic name="date">
+                <column name="date" precision="-1"/>
+            </basic>
+            <many-to-one name="sideByVictorySide" optional="true" target-entity="ru.ifmo.samuraiWorld.data.Side">
+                <join-column name="victory_side" nullable="false" referenced-column-name="id_side"/>
+            </many-to-one>
+            <one-to-many name="samuraiBattlesById" mapped-by="battleByIdBattle"
+                         target-entity="ru.ifmo.samuraiWorld.data.SamuraiBattle"/>
+            <one-to-many name="sideBattlesById" mapped-by="battleByIdBattle"
+                         target-entity="ru.ifmo.samuraiWorld.data.SideBattle"/>
+            <one-to-one name="warById" optional="true" target-entity="ru.ifmo.samuraiWorld.data.War">
+                <join-column name="id" referenced-column-name="id"/>
+            </one-to-one>
+        </attributes>
+    </entity>
+    <entity class="ru.ifmo.samuraiWorld.data.Clan">
+        <table name="Clan" schema="public" catalog="pip"/>
+        <attributes>
+            <id name="name">
+                <column name="name"/>
+            </id>
+            <basic name="genericSign">
+                <column name="generic_sign"/>
+            </basic>
+            <basic name="idLeader">
+                <column name="id_leader" precision="-1"/>
+            </basic>
+            <many-to-one name="samuraiByIdLeader" optional="true" target-entity="ru.ifmo.samuraiWorld.data.Samurai">
+                <join-column name="id_leader" referenced-column-name="id"/>
+            </many-to-one>
+            <one-to-many name="clanSidesByName" mapped-by="clanByClanName"
+                         target-entity="ru.ifmo.samuraiWorld.data.ClanSide"/>
+            <one-to-many name="landsByName" mapped-by="clanByNameClan" target-entity="ru.ifmo.samuraiWorld.data.Land"/>
+            <one-to-many name="samuraisByName" mapped-by="clanByClanName"
+                         target-entity="ru.ifmo.samuraiWorld.data.Samurai"/>
+        </attributes>
+    </entity>
+    <entity class="ru.ifmo.samuraiWorld.data.ClanSide">
+        <table name="Clan_side" schema="public" catalog="pip"/>
+        <id-class class="ru.ifmo.samuraiWorld.data.ClanSidePK"/>
+        <attributes>
+            <id name="clanName">
+                <column name="clan_name"/>
+            </id>
+            <id name="idSide">
+                <column name="id_side" precision="-1"/>
+            </id>
+            <many-to-one name="clanByClanName" optional="true" target-entity="ru.ifmo.samuraiWorld.data.Clan">
+                <join-column name="clan_name" referenced-column-name="name"/>
+            </many-to-one>
+            <many-to-one name="sideByIdSide" optional="true" target-entity="ru.ifmo.samuraiWorld.data.Side">
+                <join-column name="id_side" referenced-column-name="id_side"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="ru.ifmo.samuraiWorld.data.Dodze">
+        <table name="Dodze" schema="public" catalog="pip"/>
+        <attributes>
+            <id name="name">
+                <column name="name"/>
+            </id>
+            <basic name="description">
+                <column name="description" nullable="false"/>
+            </basic>
+            <one-to-many name="trainingsByName" mapped-by="dodzeByDodzeName"
+                         target-entity="ru.ifmo.samuraiWorld.data.Training"/>
+        </attributes>
+    </entity>
+    <entity class="ru.ifmo.samuraiWorld.data.Duel">
+        <table name="Duel" schema="public" catalog="pip"/>
+        <id-class class="ru.ifmo.samuraiWorld.data.DuelPK"/>
+        <attributes>
+            <id name="firstSamurai">
+                <column name="first_samurai" precision="-1"/>
+            </id>
+            <id name="secondSamurai">
+                <column name="second_samurai" precision="-1"/>
+            </id>
+            <basic name="idWinning">
+                <column name="id_winning" nullable="false" precision="-1"/>
+            </basic>
+            <many-to-one name="samuraiByFirstSamurai" optional="true" target-entity="ru.ifmo.samuraiWorld.data.Samurai">
+                <join-column name="first_samurai" referenced-column-name="id"/>
+            </many-to-one>
+            <many-to-one name="samuraiBySecondSamurai" optional="true"
+                         target-entity="ru.ifmo.samuraiWorld.data.Samurai">
+                <join-column name="second_samurai" referenced-column-name="id"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="ru.ifmo.samuraiWorld.data.Inventory">
+        <table name="Inventory" schema="public" catalog="pip"/>
+        <attributes>
+            <id name="id">
+                <column name="id" precision="-1"/>
+            </id>
+            <basic name="idOwner">
+                <column name="id_owner" precision="-1"/>
+            </basic>
+            <basic name="name">
+                <column name="name"/>
+            </basic>
+            <many-to-one name="samuraiByIdOwner" optional="true" target-entity="ru.ifmo.samuraiWorld.data.Samurai">
+                <join-column name="id_owner" referenced-column-name="id"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="ru.ifmo.samuraiWorld.data.Land">
+        <table name="Land" schema="public" catalog="pip"/>
+        <attributes>
+            <id name="name">
+                <column name="name"/>
+            </id>
+            <basic name="nameClan">
+                <column name="name_clan" nullable="false"/>
+            </basic>
+            <many-to-one name="clanByNameClan" optional="true" target-entity="ru.ifmo.samuraiWorld.data.Clan">
+                <join-column name="name_clan" nullable="false" referenced-column-name="name"/>
+            </many-to-one>
+            <one-to-many name="samuraisByName" mapped-by="landByLandName"
+                         target-entity="ru.ifmo.samuraiWorld.data.Samurai"/>
+        </attributes>
+    </entity>
+    <entity class="ru.ifmo.samuraiWorld.data.Samurai">
+        <table name="Samurai" schema="public" catalog="pip"/>
+        <attributes>
+            <id name="id">
+                <column name="id" precision="-1"/>
+            </id>
+            <basic name="name">
+                <column name="name" nullable="false"/>
+            </basic>
+            <basic name="age">
+                <column name="age" nullable="false" precision="-1"/>
+            </basic>
+            <basic name="weight">
+                <column name="weight" nullable="false" precision="-1"/>
+            </basic>
+            <basic name="height">
+                <column name="height" nullable="false" precision="-1"/>
+            </basic>
+            <basic name="alive">
+                <column name="alive" nullable="false" precision="-1"/>
+            </basic>
+            <basic name="landName">
+                <column name="land_name"/>
+            </basic>
+            <basic name="clanName">
+                <column name="clan_name"/>
+            </basic>
+            <many-to-one name="landByLandName" optional="true" target-entity="ru.ifmo.samuraiWorld.data.Land">
+                <join-column name="land_name" referenced-column-name="name"/>
+            </many-to-one>
+            <many-to-one name="clanByClanName" optional="true" target-entity="ru.ifmo.samuraiWorld.data.Clan">
+                <join-column name="clan_name" referenced-column-name="name"/>
+            </many-to-one>
+            <one-to-many name="clansById" mapped-by="samuraiByIdLeader" target-entity="ru.ifmo.samuraiWorld.data.Clan"/>
+            <one-to-many name="duelsById" mapped-by="samuraiByFirstSamurai"
+                         target-entity="ru.ifmo.samuraiWorld.data.Duel"/>
+            <one-to-many name="duelsById_0" mapped-by="samuraiBySecondSamurai"
+                         target-entity="ru.ifmo.samuraiWorld.data.Duel"/>
+            <one-to-many name="inventoriesById" mapped-by="samuraiByIdOwner"
+                         target-entity="ru.ifmo.samuraiWorld.data.Inventory"/>
+            <one-to-many name="samuraiBattlesById" mapped-by="samuraiByIdSamurai"
+                         target-entity="ru.ifmo.samuraiWorld.data.SamuraiBattle"/>
+            <one-to-many name="samuraiTrainingsById" mapped-by="samuraiByIdSamurai"
+                         target-entity="ru.ifmo.samuraiWorld.data.SamuraiTraining"/>
+        </attributes>
+    </entity>
+    <entity class="ru.ifmo.samuraiWorld.data.SamuraiBattle">
+        <table name="Samurai_battle" schema="public" catalog="pip"/>
+        <id-class class="ru.ifmo.samuraiWorld.data.SamuraiBattlePK"/>
+        <attributes>
+            <id name="idSamurai">
+                <column name="id_samurai" precision="-1"/>
+            </id>
+            <id name="idBattle">
+                <column name="id_battle" precision="-1"/>
+            </id>
+            <many-to-one name="samuraiByIdSamurai" optional="true" target-entity="ru.ifmo.samuraiWorld.data.Samurai">
+                <join-column name="id_samurai" referenced-column-name="id"/>
+            </many-to-one>
+            <many-to-one name="battleByIdBattle" optional="true" target-entity="ru.ifmo.samuraiWorld.data.Battle">
+                <join-column name="id_battle" referenced-column-name="id"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="ru.ifmo.samuraiWorld.data.SamuraiTraining">
+        <table name="Samurai_training" schema="public" catalog="pip"/>
+        <id-class class="ru.ifmo.samuraiWorld.data.SamuraiTrainingPK"/>
+        <attributes>
+            <id name="idSamurai">
+                <column name="id_samurai" precision="-1"/>
+            </id>
+            <id name="idTraining">
+                <column name="id_training" precision="-1"/>
+            </id>
+            <many-to-one name="samuraiByIdSamurai" optional="true" target-entity="ru.ifmo.samuraiWorld.data.Samurai">
+                <join-column name="id_samurai" referenced-column-name="id"/>
+            </many-to-one>
+            <many-to-one name="trainingByIdTraining" optional="true" target-entity="ru.ifmo.samuraiWorld.data.Training">
+                <join-column name="id_training" referenced-column-name="id"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="ru.ifmo.samuraiWorld.data.Side">
+        <table name="Side" schema="public" catalog="pip"/>
+        <attributes>
+            <id name="idSide">
+                <column name="id_side" precision="-1"/>
+            </id>
+            <basic name="idWar">
+                <column name="id_war" precision="-1"/>
+            </basic>
+            <basic name="status">
+                <column name="status" precision="-1"/>
+            </basic>
+            <many-to-one name="warByIdWar" optional="true" target-entity="ru.ifmo.samuraiWorld.data.War">
+                <join-column name="id_war" referenced-column-name="id"/>
+            </many-to-one>
+            <one-to-many name="battlesByIdSide" mapped-by="sideByVictorySide"
+                         target-entity="ru.ifmo.samuraiWorld.data.Battle"/>
+            <one-to-many name="clanSidesByIdSide" mapped-by="sideByIdSide"
+                         target-entity="ru.ifmo.samuraiWorld.data.ClanSide"/>
+            <one-to-many name="sideBattlesByIdSide" mapped-by="sideByIdSide"
+                         target-entity="ru.ifmo.samuraiWorld.data.SideBattle"/>
+        </attributes>
+    </entity>
+    <entity class="ru.ifmo.samuraiWorld.data.SideBattle">
+        <table name="Side_battle" schema="public" catalog="pip"/>
+        <id-class class="ru.ifmo.samuraiWorld.data.SideBattlePK"/>
+        <attributes>
+            <id name="idSide">
+                <column name="id_side" precision="-1"/>
+            </id>
+            <id name="idBattle">
+                <column name="id_battle" precision="-1"/>
+            </id>
+            <many-to-one name="sideByIdSide" optional="true" target-entity="ru.ifmo.samuraiWorld.data.Side">
+                <join-column name="id_side" referenced-column-name="id_side"/>
+            </many-to-one>
+            <many-to-one name="battleByIdBattle" optional="true" target-entity="ru.ifmo.samuraiWorld.data.Battle">
+                <join-column name="id_battle" referenced-column-name="id"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+    <entity class="ru.ifmo.samuraiWorld.data.Training">
+        <table name="Training" schema="public" catalog="pip"/>
+        <attributes>
+            <id name="id">
+                <column name="id" precision="-1"/>
+            </id>
+            <basic name="dodzeName">
+                <column name="dodze_name" nullable="false"/>
+            </basic>
+            <basic name="time">
+                <column name="time" nullable="false" precision="-1"/>
+            </basic>
+            <many-to-one name="dodzeByDodzeName" optional="true" target-entity="ru.ifmo.samuraiWorld.data.Dodze">
+                <join-column name="dodze_name" nullable="false" referenced-column-name="name"/>
+            </many-to-one>
+            <one-to-many name="samuraiTrainingsById" mapped-by="trainingByIdTraining"
+                         target-entity="ru.ifmo.samuraiWorld.data.SamuraiTraining"/>
+        </attributes>
+    </entity>
+    <entity class="ru.ifmo.samuraiWorld.data.War">
+        <table name="War" schema="public" catalog="pip"/>
+        <attributes>
+            <id name="id">
+                <column name="id" precision="-1"/>
+            </id>
+            <basic name="start">
+                <column name="start" precision="-1"/>
+            </basic>
+            <basic name="end">
+                <column name="end" nullable="false" precision="-1"/>
+            </basic>
+            <one-to-many name="sidesById" mapped-by="warByIdWar" target-entity="ru.ifmo.samuraiWorld.data.Side"/>
+            <one-to-one name="battleById" optional="true" mapped-by="warById"
+                        target-entity="ru.ifmo.samuraiWorld.data.Battle"/>
+        </attributes>
+    </entity>
+</entity-mappings>
