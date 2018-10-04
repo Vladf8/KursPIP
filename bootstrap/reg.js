@@ -1,5 +1,4 @@
  $(function(){
-            var output = $('#resp-status-text'); // блок вывода информации
             $('#SingUp').click( function(){
                 
                 var name = document.getElementById("Username1").value;
@@ -8,24 +7,32 @@
 
                 $.ajax({
                     type: 'POST', // метод передачи данных
-                    url: '/auth/singup', // путь
-                    //dataType: 'text', // тип ожидаемых данных в ответе
+                    url: 'http://localhost:3250/api/auth/signup', // путь
+//                    ContentType: 'application/json',
+                    dataType: 'json', // тип ожидаемых данных в ответе
+                    crossFomain:true,
 
-                    data: JSON.stringify({name: name, email: email, password: password}), // данные, которые передаем на сервер
+                    data: JSON.stringify({email: email, password: password}), // данные, которые передаем на сервер
                     beforeSend: function () { // Функция вызывается перед отправкой запроса
-
-                        output.text('...Wait...');
+                        alert(name + email + password)
+                        
+                        
                     },
-                    error: function (req, text, error) { // отслеживание ошибок во время выполнения ajax-запроса
-                        output.text('Error: ' + text + ' | ' + error);
+                    error: function (req, text, error) {
+                        alert("ne ok");
+                        alert(req.responseText +' | ' + text + ' | ' + error);// отслеживание ошибок во время выполнения ajax-запроса
                     },
 
-                    success: function (data) { // функция, которая будет вызвана в случае удачного завершения запроса к серверу
+                    success: function (data) {
+                        alert("Ok");// функция, которая будет вызвана в случае удачного завершения запроса к серверу
                         alert(data);
-                        output.text(data); // выводим на страницу данные, полученные с сервера
                     },
                     headers: {
-                        "Content-Type": "application/json"
+                        "ContentType":"application/json"
+                        
+                    },
+                    complete: function(req,status){
+                        alert("Complete");
                     }
                 })
             })

@@ -313,14 +313,55 @@ html { height: 100%;}
  <div class="col-xs-1 col-sm-4 col-md-4 col-lg-3">
  <img src="avatar.jpg" class="img-responsive img-rounded" alt="" width="200" height="200">
  </div>
- <h2 style="background-color: 929aab; border-radius: 10px">My name</h2>
+ <h2 id="Name" style="background-color: 929aab; border-radius: 10px">My name</h2>
  <br>
  <br>
  <div class="col-lg-3" style="background-color: 929aab; border-radius: 10px"  >
- <p>Birthday: </p>
- <p>Height: </p>
- <p>Weight: </p>
- <p>Clan: </p>
+ <p id="Birth">Birthday: </p>
+ <p id="Height">Height: </p>
+ <p id="Weight">Weight: </p>
+ <p id="Clan">Clan: </p>
+ </div>
+ <div class="col-lg-3">
+  <!-- Кнопка пуска модальное окно -->  
+<button type="button" id="Modal" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+
+<!-- Модальное окно -->  
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Скрипт, привязывающий событие click, открывающее модальное окно, к элементам, имеющим класс .btn -->
+<script>
+$(document).ready(function(){
+  //при нажатию на любую кнопку, имеющую класс .btn
+  $("#Modal").click(function() {
+      
+    //открыть модальное окно с id="myModal"
+   $('#myModal').on('shown.bs.modal', function () {
+       alert("Ok")
+  $('#myInput').focus()
+})
+  });
+});
+</script>
  </div>
  </div>
  </div>
